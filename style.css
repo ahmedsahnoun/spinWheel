@@ -1,0 +1,10 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+#container {
+  width: 700px;
+  height: 700px;
+}
