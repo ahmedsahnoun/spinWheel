@@ -8,7 +8,7 @@ function subscription(token) {
 	});
 
 	socket.on('connect', () => {
-		console.log('Successfully connected to the websocket')
+		console.log('Successfully connected to streamelemnt')
 		socket.emit('authenticate', { method: 'jwt', token })
 	})
 

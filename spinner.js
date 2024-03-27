@@ -2,7 +2,8 @@ import { Wheel } from 'https://cdn.jsdelivr.net/npm/spin-wheel@4.3.1/dist/spin-w
 import *  as db from "./db.js"
 
 const container = document.getElementById("container");
-const socket = new WebSocket("ws://localhost:8765");
+let localSocket = null
+let reconnectTimer = null;
 const queue = []
 const cooldown = 1000
 let isSpinning = false
@@ -40,7 +41,8 @@ function onRestFunction(e) {
 	if (wheel.rotation % 360 !== 0) {
 		const options = ['+30', 'END']
 		console.log(options[e.currentIndex])
-		socket.send(options[e.currentIndex])
+		if (localSocket.readyState === WebSocket.OPEN)
+			localSocket.send(options[e.currentIndex])
 
 		setTimeout(() => {
 			if (wheel.items[1].weight < 100) {
@@ -52,5 +54,32 @@ function onRestFunction(e) {
 		}, cooldown)
 	}
 }
+
+function connectWebSocket() {
+	console.log('Attempting to connect WebSocket...');
+	localSocket = new WebSocket("ws://localhost:8765");
+
+	localSocket.onopen = function (event) {
+		console.log('WebSocket connection opened.');
+		// Clear the reconnect timer if the connection is successful
+		clearInterval(reconnectTimer);
+		reconnectTimer = null;
+	};
+
+	localSocket.onclose = function (event) {
+		console.log('WebSocket connection closed.');
+		// Schedule a reconnect attempt after a delay
+		if (!reconnectTimer) {
+			reconnectTimer = setInterval(connectWebSocket, 2000);
+		}
+	};
+
+	// localSocket.onerror = function (event) {
+	// 	console.error('WebSocket error:', event);
+	// 	// Handle errors as needed
+	// };
+}
+connectWebSocket()
+
 
 window.queue = queue
