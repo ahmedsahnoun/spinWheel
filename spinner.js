@@ -2,7 +2,7 @@ import { Wheel } from 'https://cdn.jsdelivr.net/npm/spin-wheel@4.3.1/dist/spin-w
 import *  as db from "./db.js"
 
 const container = document.getElementById("container");
-// const socket = new WebSocket("ws://localhost:8765");
+const socket = new WebSocket("ws://localhost:8765");
 const queue = []
 const cooldown = 1000
 let isSpinning = false
@@ -40,7 +40,7 @@ function onRestFunction(e) {
 	if (wheel.rotation % 360 !== 0) {
 		const options = ['+30', 'END']
 		console.log(options[e.currentIndex])
-		// socket.send(options[e.currentIndex])
+		socket.send(options[e.currentIndex])
 
 		setTimeout(() => {
 			if (wheel.items[1].weight < 100) {
