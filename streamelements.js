@@ -20,7 +20,7 @@ function subscription(token) {
 		if (data.type == 'subscriber') {
 			giftedCounter++
 			if (giftedCounter % 10 === 0) {
-				generateBall(data.data.sender)
+				queue.push(1)
 			}
 		}
 	});
