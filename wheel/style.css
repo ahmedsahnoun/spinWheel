@@ -1,0 +1,15 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  place-content: center;
+}
+
+#container {
+  width: 1000px;
+  height: 1000px;
+}

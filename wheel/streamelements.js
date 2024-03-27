@@ -22,6 +22,7 @@ function subscription(token) {
 			if (giftedCounter % 10 === 0) {
 				queue.push(1)
 			}
+			console.log(giftedCounter)
 		}
 	});
 }

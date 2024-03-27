@@ -8,6 +8,7 @@ const queue = []
 const cooldown = 1000
 let isSpinning = false
 let props = {
+	// itemLabelFont: "Helvetica",
 	pointerAngle: 90,
 	onRest: onRestFunction,
 	overlayImage: "./overlay.png",
@@ -40,7 +41,6 @@ const launcher = setInterval(() => {
 function onRestFunction(e) {
 	if (wheel.rotation % 360 !== 0) {
 		const options = ['+30', 'END']
-		console.log(options[e.currentIndex])
 		if (localSocket.readyState === WebSocket.OPEN)
 			localSocket.send(options[e.currentIndex])
 
@@ -80,6 +80,5 @@ function connectWebSocket() {
 	// };
 }
 connectWebSocket()
-
 
 window.queue = queue
